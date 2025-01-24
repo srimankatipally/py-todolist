@@ -1,8 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 
+from models.base import Base as BaseModel
 
-DATABASE_URL = 'sqlite:///todolist.db'
+DATABASE_URI = "sqlite:///todolist.db"
 
-database = SQLAlchemy()
-
-
+db = SQLAlchemy(model_class=BaseModel)

@@ -1,9 +1,11 @@
-from models.base import BaseModel
-from database import database
+from sqlalchemy.orm import Mapped, mapped_column
 
-class Todo(BaseModel):
+from models.base import Base
+
+
+class Todo(Base):
     __tablename__ = "todos"
 
-    id = database.Column(database.Integer, primary_key=True)
-    title = database.Column(database.String(100), nullable=False)
-    completed = database.Column(database.Boolean, default=False)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, init=False)
+    title: Mapped[str] = mapped_column(nullable=False)
+    completed: Mapped[bool] = mapped_column(default=False)
