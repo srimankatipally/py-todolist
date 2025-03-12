@@ -1,31 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo List</title>
-  </head>
-  <body>
-    <h1>Todo List</h1>
-    <form action="/add" method="post">
-      <input type="text" name="title" placeholder="Add new todo" required />
-      <button type="submit">Add</button>
-    </form>
-    <ul>
-      {% for todo in todos %}
-      <li>
-        {{ todo.title }} {% if not todo.completed %}
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo List</title>
+  <style>
+    .todo-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .todo-title {
+      margin-right: 10px;
+      flex-grow: 1;
+    }
+
+    .todo-actions {
+      display: flex;
+      gap: 5px;
+    }
+
+    form {
+      margin: 0;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Todo List</h1>
+  <form action="/add" method="post">
+    <input type="text" name="title" placeholder="Add new todo" required />
+    <button type="submit">Add</button>
+  </form>
+  <ul>
+    {% for todo in todos %}
+    <li class="todo-item">
+      <div class="todo-title">
+        {{ todo.title }} {% if todo.completed %}
+        <span>(Completed)</span>
+        {% endif %}
+      </div>
+      <div class="todo-actions">
+        <form action="/move_up/{{ todo.id }}" method="post">
+          <button type="submit" title="Move Up">↑</button>
+        </form>
+        <form action="/move_down/{{ todo.id }}" method="post">
+          <button type="submit" title="Move Down">↓</button>
+        </form>
+        {% if not todo.completed %}
         <form action="/complete/{{ todo.id }}" method="post">
           <button type="submit">Complete</button>
         </form>
-        {% else %}
-        <span>(Completed)</span>
         {% endif %}
         <form action="/delete/{{ todo.id }}" method="post">
           <button type="submit">Delete</button>
         </form>
-      </li>
-      {% endfor %}
-    </ul>
-  </body>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</body>
+
 </html>

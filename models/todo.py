@@ -9,3 +9,4 @@ class Todo(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, init=False)
     title: Mapped[str] = mapped_column(nullable=False)
     completed: Mapped[bool] = mapped_column(default=False)
+    position: Mapped[int] = mapped_column(default=0)
